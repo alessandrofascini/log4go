@@ -1,0 +1,71 @@
+{
+  "appenders": {
+    "out": {
+      "type": "dateFile",
+      "filename": "./temp/test",
+      "maxLogSize": 130,
+      "keepFileExt": false,
+      "channelSize": 160,
+      "internalChannelSize": 120,
+      "mode": 493,
+      "flags": 511,
+      "compress": true,
+      "compressMode": "default",
+      "fileNameSep": ".test.",
+      "layout": {
+        "type": "pattern",
+        "pattern": "%[%d %c%] ~ %m"
+      }
+    },
+    "app": {
+      "type": "stdout",
+      "filename": "./temp/app.txt",
+      "maxLogSize": 2500,
+      "keepFileExt": true,
+      "compress": false,
+      "compressMode": "default",
+      "backups": 5,
+      "layout": {
+        "type": "pattern",
+        "pattern": "%[%d %c%] ~ %m"
+      },
+      "channelSize": 20
+    },
+    "net": {
+      "type": "http",
+      "method": "POST",
+      "url": "http://localhost:8080/log",
+      "header": {
+        "content-type": "application/json"
+      },
+      "layout": {
+        "type": "pattern",
+        "pattern": "%[%d %c%] ~ %m"
+      }
+    },
+    "custom": {
+      "type": "custom"
+    }
+  },
+  "categories": {
+    "default": {
+      "appenders": [
+        "out",
+        "custom",
+        "net"
+      ],
+      "level": "all"
+    },
+    "app": {
+      "appenders": [
+        "app"
+      ],
+      "level": "all"
+    }
+  },
+  "configuration": {
+    "appenderChannelSize": 160,
+    "internalAppenderChannelSize": 110,
+    "createFolderPerm": 493
+  }
+}
