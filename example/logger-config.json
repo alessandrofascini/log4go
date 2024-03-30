@@ -27,7 +27,7 @@
       "backups": 5,
       "layout": {
         "type": "pattern",
-        "pattern": "%[%d %c%] ~ %m"
+        "pattern": "%[%d %c%] ~ %m %x{test}"
       },
       "channelSize": 20
     },
@@ -52,7 +52,7 @@
       "appenders": [
         "out",
         "custom",
-        "net"
+        "app"
       ],
       "level": "all"
     },

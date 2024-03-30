@@ -78,6 +78,8 @@ func main() {
 	//})
 	logger := log4go.GetLogger()
 	appLogger := log4go.GetLogger()
+
+	appLogger.AddContext("test", "test value")
 	appLogger.Info("ciao")
 	logger.Info("5")
 	logger.Info("4")
@@ -96,6 +98,7 @@ func main() {
 	logger.Info("Before Shutdown")
 	appLogger.Info("prima della fine")
 	log4go.Shutdown()
+
 	logger.Info("After Shutdown")
 	fmt.Println("finished after ", time.Now().UnixMilli()-start.UnixMilli())
 	fmt.Println(time.Now().Format("2006-01-02T15:04:05.000"))

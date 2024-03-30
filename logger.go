@@ -85,10 +85,26 @@ func (l *Logger) Trace(args ...any) {
 	l.log(*pkg.LevelTrace, args)
 }
 
-func (l *Logger) Debug(args ...any) {
+func (l *Logger) TraceWithContext(c map[string]any, args ...any) {
 	if pkg.LevelTrace.Value < l.level {
 		return
 	}
+	l.ChangeManyContext(c)
+	l.log(*pkg.LevelTrace, args)
+}
+
+func (l *Logger) Debug(args ...any) {
+	if pkg.LevelDebug.Value < l.level {
+		return
+	}
+	l.log(*pkg.LevelDebug, args)
+}
+
+func (l *Logger) DebugWithContext(c map[string]any, args ...any) {
+	if pkg.LevelDebug.Value < l.level {
+		return
+	}
+	l.ChangeManyContext(c)
 	l.log(*pkg.LevelDebug, args)
 }
 
@@ -99,10 +115,26 @@ func (l *Logger) Info(args ...any) {
 	l.log(*pkg.LevelInfo, args)
 }
 
+func (l *Logger) InfoWithContext(c map[string]any, args ...any) {
+	if pkg.LevelInfo.Value < l.level {
+		return
+	}
+	l.ChangeManyContext(c)
+	l.log(*pkg.LevelInfo, args)
+}
+
 func (l *Logger) Warn(args ...any) {
 	if pkg.LevelWarn.Value < l.level {
 		return
 	}
+	l.log(*pkg.LevelWarn, args)
+}
+
+func (l *Logger) WarnWithContext(c map[string]any, args ...any) {
+	if pkg.LevelWarn.Value < l.level {
+		return
+	}
+	l.ChangeManyContext(c)
 	l.log(*pkg.LevelWarn, args)
 }
 
@@ -113,10 +145,26 @@ func (l *Logger) Error(args ...any) {
 	l.log(*pkg.LevelError, args)
 }
 
+func (l *Logger) ErrorWithContext(c map[string]any, args ...any) {
+	if pkg.LevelError.Value < l.level {
+		return
+	}
+	l.ChangeManyContext(c)
+	l.log(*pkg.LevelError, args)
+}
+
 func (l *Logger) Fatal(args ...any) {
 	if pkg.LevelFatal.Value < l.level {
 		return
 	}
+	l.log(*pkg.LevelFatal, args)
+}
+
+func (l *Logger) FatalWithContext(c map[string]any, args ...any) {
+	if pkg.LevelFatal.Value < l.level {
+		return
+	}
+	l.ChangeManyContext(c)
 	l.log(*pkg.LevelFatal, args)
 }
 
