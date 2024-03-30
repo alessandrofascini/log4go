@@ -16,15 +16,15 @@ func NewLayout(config pkg.LayoutConfig) pkg.Layout {
 	switch t {
 	case "basic":
 		config["pattern"] = "[%d] [%p] %c - %m"
-		return patternLayout(&config)
+		return PatternLayout(&config)
 	case "messagePassThrough":
 		config["pattern"] = "%m"
-		return patternLayout(&config)
+		return PatternLayout(&config)
 	case "", "colored", "coloured":
 		config["pattern"] = "%[[%d] [%p] %c%] - %m"
-		return patternLayout(&config)
+		return PatternLayout(&config)
 	case "pattern":
-		return patternLayout(&config)
+		return PatternLayout(&config)
 	}
 	if externalLayoutPool[t] != nil {
 		return (*externalLayoutPool[t])(&config)
@@ -32,7 +32,7 @@ func NewLayout(config pkg.LayoutConfig) pkg.Layout {
 	panic(fmt.Sprintf("unsopported layout type: %q", t))
 }
 
-func patternLayout(config *pkg.LayoutConfig) pkg.Layout {
+func PatternLayout(config *pkg.LayoutConfig) pkg.Layout {
 	// Get Pattern
 	var p = (*config)["pattern"]
 	if p == nil {
