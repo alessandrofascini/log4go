@@ -39,9 +39,13 @@ func (l *LoggerContext) Consume() map[string]any {
 	if l.oneTimeUseMap != nil {
 		syncMap = l.oneTimeUseMap
 		// Consumed after copy my otu map
-		defer func() {
-			l.oneTimeUseMap = nil
-		}()
+		// ************************
+		// Disabled in order to allow 
+		// go routines to use logging 
+		// with context events
+		// defer func() {
+		// 	l.oneTimeUseMap = nil
+		// }()
 	}
 	m := make(map[string]any)
 	syncMap.Range(func(key, value any) bool {
