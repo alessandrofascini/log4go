@@ -64,13 +64,18 @@ func (l *Logger) ClearContext() {
 
 // Log Methods
 
-func (l *Logger) log(level pkg.Level, data []any) {
+func (l *Logger) log(level pkg.Level, data []any, otc map[string]any) {
+	ctx := l.loggerContext.Consume()
+	for key, value := range otc {
+		ctx[key] = value
+	}
+
 	event := &pkg.LoggingEvent{
 		StartTime:    time.Now(),
 		CategoryName: l.name,
 		Data:         data,
 		Level:        level,
-		Context:      l.loggerContext.Consume(),
+		Context:      ctx,
 		Pid:          ProcessPid,
 	}
 	for _, handler := range l.appenders {
@@ -82,90 +87,90 @@ func (l *Logger) Trace(args ...any) {
 	if pkg.LevelTrace.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelTrace, args)
+	l.log(*pkg.LevelTrace, args, nil)
 }
 
 func (l *Logger) TraceWithContext(c map[string]any, args ...any) {
 	if pkg.LevelTrace.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelTrace, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelTrace, args, c)
 }
 
 func (l *Logger) Debug(args ...any) {
 	if pkg.LevelDebug.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelDebug, args)
+	l.log(*pkg.LevelDebug, args, nil)
 }
 
 func (l *Logger) DebugWithContext(c map[string]any, args ...any) {
 	if pkg.LevelDebug.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelDebug, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelDebug, args, c)
 }
 
 func (l *Logger) Info(args ...any) {
 	if pkg.LevelInfo.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelInfo, args)
+	l.log(*pkg.LevelInfo, args, nil)
 }
 
 func (l *Logger) InfoWithContext(c map[string]any, args ...any) {
 	if pkg.LevelInfo.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelInfo, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelInfo, args, c)
 }
 
 func (l *Logger) Warn(args ...any) {
 	if pkg.LevelWarn.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelWarn, args)
+	l.log(*pkg.LevelWarn, args, nil)
 }
 
 func (l *Logger) WarnWithContext(c map[string]any, args ...any) {
 	if pkg.LevelWarn.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelWarn, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelWarn, args, c)
 }
 
 func (l *Logger) Error(args ...any) {
 	if pkg.LevelError.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelError, args)
+	l.log(*pkg.LevelError, args, nil)
 }
 
 func (l *Logger) ErrorWithContext(c map[string]any, args ...any) {
 	if pkg.LevelError.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelError, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelError, args, c)
 }
 
 func (l *Logger) Fatal(args ...any) {
 	if pkg.LevelFatal.Value < l.level {
 		return
 	}
-	l.log(*pkg.LevelFatal, args)
+	l.log(*pkg.LevelFatal, args, nil)
 }
 
 func (l *Logger) FatalWithContext(c map[string]any, args ...any) {
 	if pkg.LevelFatal.Value < l.level {
 		return
 	}
-	l.ChangeManyContext(c)
-	l.log(*pkg.LevelFatal, args)
+	//l.ChangeManyContext(c)
+	l.log(*pkg.LevelFatal, args, c)
 }
 
 func (l *Logger) Terminate() {
