@@ -6,16 +6,19 @@ import (
 	"github.com/alessandrofascini/log4go/v2/events"
 )
 
+// TODO: Implement me
+
 type Channeled struct {
 	*Unchanneled
 	chanSize uint
 }
 
 func NewChanneled(unchan *Unchanneled, chanSize uint) (*Channeled, error) {
-	if chanSize == 0 {
-		return nil, errors.New("chan size cannot be equal to zero")
-	}
-	return &Channeled{unchan, chanSize}, nil
+	return nil, errors.New("implement me")
+	//if chanSize == 0 {
+	//	return nil, errors.New("chan size cannot be equal to zero")
+	//}
+	//return &Channeled{unchan, chanSize}, nil
 }
 
 func (u *Channeled) WriteEvent(e *events.Event) (int, error) {

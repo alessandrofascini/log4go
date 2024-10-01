@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	ErrUnkownVerb  = errors.New("unkown field verb")
+	ErrUnknownVerb = errors.New("unknown field verb")
 	ErrTruncFormat = errors.New("incorrect truncation format")
 	ErrPadFormat   = errors.New("incorrect padding format")
 )
@@ -107,7 +107,7 @@ func NewField(r *strings.Reader) (f Field, err error) {
 	case endColouredBlockVerb:
 		f = &ColorResetField{}
 	default:
-		return nil, ErrUnkownVerb
+		return nil, ErrUnknownVerb
 	}
 
 	if padOk {
@@ -227,7 +227,7 @@ func readVerb(r *strings.Reader) (rune, error) {
 		return c, err
 	}
 	if !isValidVerb(c) {
-		return c, ErrUnkownVerb
+		return c, ErrUnknownVerb
 	}
 	return c, nil
 }

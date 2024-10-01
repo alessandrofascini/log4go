@@ -12,7 +12,7 @@ type Event struct {
 	StartTime    time.Time
 	CategoryName string
 	Data         []any
-	Level        levels.Level
+	Level        *levels.Level
 	Context      context.Context
 	Pid          int
 }

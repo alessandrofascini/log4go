@@ -1,9 +1,5 @@
 package layouts
 
-import (
-	"github.com/alessandrofascini/log4go/v2/events"
-)
-
 // // Built-in layouts
 // const (
 // 	Basic              = "basic"
@@ -13,9 +9,9 @@ import (
 // 	Pattern            = "pattern"
 // )
 
-type Layouter interface {
-	events.EventWriterTo
-}
+// type Layouter interface {
+//	events.EventWriterTo
+// }
 
 // func LayoutFactory(conf *Config) (Layouter, error) {
 // 	switch conf.LayoutType {

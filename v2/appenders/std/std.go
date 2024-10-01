@@ -4,6 +4,10 @@ import "os"
 
 type StdOut struct{}
 
+func NewStdOut() *StdOut {
+	return &StdOut{}
+}
+
 func (s *StdOut) Write(b []byte) (int, error) {
 	return os.Stdout.Write(b)
 }

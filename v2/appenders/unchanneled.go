@@ -4,15 +4,14 @@ import (
 	"io"
 
 	"github.com/alessandrofascini/log4go/v2/events"
-	"github.com/alessandrofascini/log4go/v2/layouts"
 )
 
 type Unchanneled struct {
 	writer io.WriteCloser
-	layout layouts.Layouter
+	layout events.EventWriterTo
 }
 
-func NewUnchanneled(w io.WriteCloser, l layouts.Layouter) (*Unchanneled, error) {
+func NewUnchanneled(w io.WriteCloser, l events.EventWriterTo) (*Unchanneled, error) {
 	return &Unchanneled{w, l}, nil
 }
 

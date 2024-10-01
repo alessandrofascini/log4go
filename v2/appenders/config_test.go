@@ -17,8 +17,10 @@ func TestConfigUnmarshalJSON(t *testing.T) {
 			"host": "localhost"
 		}`)
 	conf := new(Config)
-	conf.UnmarshalJSON(jsonBlob)
-
+	if err := conf.UnmarshalJSON(jsonBlob); err != nil {
+		t.Error(err)
+		return
+	}
 	fmt.Println("type:", conf.Typo)
 	fmt.Println("layout:", conf.Layout)
 }

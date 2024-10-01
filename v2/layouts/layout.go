@@ -10,35 +10,34 @@ import (
 )
 
 // Layout define default layout options
-// Implements Layouter interface
+// Implements EventWriterTo interface
 type Layout struct {
 	// fields in pattern that may change at runtime (e.g. %m, %r). In golang std we call it verbs
 	fields []fields.Field
 }
 
-// NewLayout: create new layout struct
-// input: pattern as string
+// NewLayout - create new layout struct
 func NewLayout(p string) (*Layout, error) {
 	reader := strings.NewReader(p)
-	f := []fields.Field{}
+	f := make([]fields.Field, 0)
 	var buf bytes.Buffer
 	for reader.Len() > 0 {
 		r, _, err := reader.ReadRune()
 		if err != nil {
 			return nil, err
 		}
-		if r == '%' {
-			if buf.Len() > 0 {
-				f = append(f, fields.NewTextField(buf.Bytes()))
-				buf.Reset()
-			}
-			if field, err := fields.NewField(reader); err != nil {
-				return nil, err
-			} else {
-				f = append(f, field)
-			}
-		} else {
+		if r != '%' {
 			buf.WriteRune(r)
+			continue
+		}
+		if buf.Len() > 0 {
+			f = append(f, fields.NewTextField(buf.Bytes()))
+			buf.Reset()
+		}
+		if field, err := fields.NewField(reader); err != nil {
+			return nil, err
+		} else {
+			f = append(f, field)
 		}
 	}
 
@@ -60,7 +59,9 @@ func (l *Layout) WriteEventTo(w io.Writer, e *events.Event) (n int64, err error)
 		return 0, err
 	}
 	for i := range l.fields {
-		l.fields[i].WriteTo(&buf, reader)
+		if _, err = l.fields[i].WriteTo(&buf, reader); err != nil {
+			return 0, err
+		}
 	}
 	m, err := w.Write(buf.Bytes())
 	n = int64(m)

@@ -7,6 +7,6 @@ import (
 )
 
 type Appender interface {
-	io.Closer
-	events.EventWriter
+	io.WriteCloser
+	events.EventWriterTo
 }

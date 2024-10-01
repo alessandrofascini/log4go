@@ -1,7 +1,14 @@
 package v2
 
-type Logger struct{}
+import (
+	"errors"
+	"github.com/alessandrofascini/log4go/v2/events"
+)
+
+type Logger struct {
+	appenders []events.EventWriter
+}
 
 func NewLogger(*Config) (*Logger, error) {
-	return nil, nil
+	return nil, errors.New("NewLogger: implement me")
 }
